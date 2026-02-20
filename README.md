@@ -2,6 +2,9 @@
 
 Bootstrap 5 uyumlu, harici CSS gerektirmeyen, mobil dostu, hafif ve esnek "Select" (Seçim Kutusu) eklentisi.
 
+[![Live Demo](https://img.shields.io/badge/Canlı_Demo-için_tıklayınız-success?style=for-the-badge&logo=github)](https://yavuzgedik.github.io/PiaSelect/)
+
+
 ## Özellikler
 
 * 📦 **Sıfır Bağımlılık (CSS için):** Kendi stilini otomatik oluşturur. Sadece Bootstrap 5 gerektirir.
