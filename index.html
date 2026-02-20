@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiaSelect.js - Bootstrap 5 Uyumlu Gelişmiş Select</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f4f7f6; padding-bottom: 50px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        .hero { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); color: white; padding: 4rem 0; margin-bottom: 3rem; border-radius: 0 0 2rem 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .hero h1 { font-weight: 800; letter-spacing: -0.5px; }
+        .card { border-radius: 1rem; border: 1px solid rgba(0,0,0,0.08) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important; }
+        .card-title { font-weight: 600; color: #1a202c; }
+        pre.code-block { background-color: #1e1e2f; color: #cfd2d6; padding: 1.25rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 0.9rem; border: 1px solid #2d2d44; line-height: 1.5; margin-bottom: 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="hero text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">PiaSelect.js</h1>
+            <p class="lead">Bootstrap 5 uyumlu, CSS gerektirmeyen, mobil dostu ve esnek "Select" eklentisi.</p>
+            
+            <!-- İndirme Butonu Eklendi -->
+            <button class="btn btn-light btn-lg mt-3 fw-bold shadow-sm text-dark" onclick="downloadPiaSelect()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download me-2" viewBox="0 0 16 16" style="margin-top:-4px;">
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+                PiaSelect.js İndir
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Kurulum -->
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-body">
+                <h3 class="card-title text-primary"><i class="bi bi-box2-heart-fill"></i> Kurulum</h3>
+                
+				<div class="alert alert-primary shadow-sm py-2 mb-3 d-flex align-items-center" role="alert">
+<i class="bi bi-exclamation-triangle-fill ms-1 me-3"></i>
+  <div>
+	  <strong>Gereksinimler</strong> <br/>
+PiaSelect.js, Bootstrap'in dropdown bileşenini kullandığı için projenizde mutlaka <b>Bootstrap 5 CSS</b> ve <b>Bootstrap 5 JS (Popper.js bundle)</b> dosyalarının dahil edilmiş olması gerekmektedir.
+  </div>
+</div>
+
+                <p>PiaSelect.js harici bir özel CSS dosyasına ihtiyaç duymaz. Kendi gerekli minimal stilini sayfaya otomatik ekler. Sadece script'i projenize dahil edin ve başlatın.</p>
+                <pre class="code-block">
+&lt;!-- Sadece Script dosyasını ekleyin --&gt;
+&lt;script src="PiaSelect.js"&gt;&lt;/script&gt;
+
+&lt;!-- Otomatik Başlatma: select etiketinize "PiaSelect" sınıfı eklerseniz otomatik çalışır --&gt;
+&lt;select class="form-select PiaSelect"&gt;...&lt;/select&gt;
+
+&lt;!-- Veya manuel olarak JS ile başlatın --&gt;
+&lt;script&gt;
+    new PiaSelect('#mySelect', {
+        searchable: true,
+        title: 'Lütfen seçiniz'
+    });
+&lt;/script&gt;
+                </pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Örnek 1 -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">1. Temel Kullanım (Tekli Seçim)</h5>
+                        <p class="text-muted small">Arama kapalı, HTML'de boş option girilmediği halde title görünür.</p>
+                        
+                        <div class="mb-3">
+                            <select id="demo1" class="form-select">
+                                <option value="ist">İstanbul</option>
+                                <option value="ank">Ankara</option>
+                                <option value="iz">İzmir</option>
+                                <option value="ant">Antalya</option>
+                            </select>
+                        </div>
+                        
+                        <pre class="code-block mt-3">
+new PiaSelect('#demo1', {
+    searchable: false,
+    title: 'Şehir Seçiniz'
+});
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Örnek 2 -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">2. Arama Özellikli (Tekli)</h5>
+                        <p class="text-muted small">Çoklu verilerde hızlıca bulmak için arama kutusu.</p>
+                        
+                        <div class="mb-3">
+                            <select id="demo2" class="form-select">
+                                <option value="js">JavaScript</option>
+                                <option value="py">Python</option>
+                                <option value="php">PHP</option>
+                                <option value="cs">C#</option>
+                                <option value="jv">Java</option>
+                                <option value="rb">Ruby</option>
+                                <option value="go">Go</option>
+                            </select>
+                        </div>
+
+                        <pre class="code-block mt-3">
+new PiaSelect('#demo2', {
+    searchable: true,
+    title: 'Dil Seçiniz'
+});
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Örnek 3 -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">3. Çoklu Seçim (Multiple) + Araçlar</h5>
+                        <p class="text-muted small">Tümünü seç/iptal et butonları ve arama aktif.</p>
+                        
+                        <div class="mb-3">
+                            <!-- multiple attribute eklendi -->
+                            <select id="demo3" class="form-select" multiple>
+                                <option value="elma">Elma</option>
+                                <option value="armut">Armut</option>
+                                <option value="muz">Muz</option>
+                                <option value="cilek">Çilek</option>
+                                <option value="kivi">Kivi</option>
+                                <option value="karpuz">Karpuz</option>
+                            </select>
+                        </div>
+
+                        <pre class="code-block mt-3">
+new PiaSelect('#demo3', {
+    searchable: true,
+    showActions: true, // Tümünü seç/kaldır
+    title: 'Meyveleri Seçiniz'
+});
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Örnek 4 -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">4. Özelleştirilmiş Metinler (İngilizce)</h5>
+                        <p class="text-muted small">Arayüzdeki tüm metinleri değiştirebilirsiniz.</p>
+                        
+                        <div class="mb-3">
+                            <select id="demo4" class="form-select" multiple>
+                                <option value="red">Red</option>
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                            </select>
+                        </div>
+
+                        <pre class="code-block mt-3">
+new PiaSelect('#demo4', {
+    searchable: true,
+    showActions: true,
+    title: 'Select Colors',
+    texts: {
+        searchPlaceholder: 'Type to search...',
+        selectAll: 'Check All',
+        deselectAll: 'Uncheck All',
+        emptySearch: 'No results found',
+        selectedCount: '{count} items selected'
+    }
+});
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Örnek 5 -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">5. Sınıf ve Data Özellikleri</h5>
+                        <p class="text-muted small">HTML etiketine eklenen <code>PiaSelect</code> sınıfı ve <code>data-*</code> nitelikleriyle tüm metinleri özelleştirme.</p>
+                        
+                        <div class="mb-3">
+                            <select class="form-select PiaSelect" multiple 
+                                data-title="Sebzeleri Seçiniz" 
+                                data-searchable="true" 
+                                data-show-actions="true" 
+                                data-max-visible="2"
+                                data-text-search-placeholder="Sebze ara..."
+                                data-text-select-all="Hepsini Seç"
+                                data-text-deselect-all="Temizle"
+                                data-text-empty-search="Sebze bulunamadı"
+                                data-text-selected-count="{count} sebze seçildi">
+                                <option value="domates">Domates</option>
+                                <option value="biber">Biber</option>
+                                <option value="patlican">Patlıcan</option>
+                            </select>
+                        </div>
+
+                        <pre class="code-block mt-3">
+&lt;!-- JS koduna gerek yok, sınıfı ekleyin yeter! --&gt;
+&lt;select class="form-select PiaSelect" multiple 
+    data-title="Sebzeleri Seç" 
+    data-searchable="true" 
+    data-show-actions="true"&gt;...&lt;/select&gt;
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Örnek 6 (Güncellendi: Otomatik Dinamik Veri Algılama) -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-0 border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">6. Dinamik Veri Ekleme (Otomatik Algılama)</h5>
+                        <p class="text-muted small">Ajax veya JS ile <code>select</code> içine yeni elemanlar bastığınızda <strong>hiçbir şey yapmanıza gerek kalmaz.</strong> MutationObserver sayesinde eklenti kendini otomatik günceller.</p>
+                        
+                        <div class="mb-3">
+                            <select id="demo6" class="form-select PiaSelect" data-title="Araç Seçiniz">
+                                <option value="bmw">BMW</option>
+                                <option value="audi">Audi</option>
+                            </select>
+                            
+                            <!-- Dinamik Ekleme Butonu -->
+                            <button id="addOptionBtn" class="btn btn-sm btn-dark mt-2">
+                                + Yeni Araç Ekle (Mercedes)
+                            </button>
+                        </div>
+
+                        <pre class="code-block mt-3">
+// Sadece standart yöntemle select'e option ekliyoruz.
+const sel = document.getElementById('demo6');
+sel.insertAdjacentHTML('beforeend', 
+'&lt;option value="mercedes"&gt;Mercedes&lt;/option&gt;');
+
+// Başka HİÇBİR koda (reload vs) gerek yok!
+// Eklenti değişikliği anında kendi algılar.
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS (Popper.js dahil olmalı) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ========================================== -->
+    <!-- PIASELECT.JS KAYNAK KODU BAŞLANGICI        -->
+    <!-- Bu kısmı kopyalayıp PiaSelect.js yapın     -->
+    <!-- ========================================== -->
+    <script id="piaselect-source">
+        class PiaSelect {
+            constructor(selector, options = {}) {
+                // Eğer string olarak css seçici geldiyse elementi bul, element geldiyse direkt kullan
+                this.originalSelect = typeof selector === 'string' ? document.querySelector(selector) : selector;
+                
+                if (!this.originalSelect) {
+                    console.error('PiaSelect: Element bulunamadı:', selector);
+                    return;
+                }
+
+                if (this.originalSelect.dataset.piaInitialized) {
+                    return; // Zaten başlatılmışsa tekrar kurma
+                }
+
+                // Dışarıdan erişim (reload vb. işlemler) için referans bağla
+                this.originalSelect._piaSelect = this;
+
+                // Varsayılan Metinler
+                const defaultTexts = {
+                    searchPlaceholder: 'Ara...',
+                    selectAll: 'Tümünü Seç',
+                    deselectAll: 'Seçimi Temizle',
+                    emptySearch: 'Sonuç bulunamadı',
+                    selectedCount: '{count} öğe seçildi'
+                };
+
+                // HTML Data özelliklerini (Data Attributes) oku
+                const dataset = this.originalSelect.dataset;
+                const dataOptions = {};
+                const dataTexts = {};
+                
+                if (dataset.title !== undefined) dataOptions.title = dataset.title;
+                if (dataset.searchable !== undefined) dataOptions.searchable = dataset.searchable === 'true';
+                if (dataset.showActions !== undefined) dataOptions.showActions = dataset.showActions === 'true';
+                if (dataset.maxVisible !== undefined) dataOptions.maxVisibleSelected = parseInt(dataset.maxVisible, 10);
+
+                // Texts için Data Attribute Okumaları
+                if (dataset.textSearchPlaceholder !== undefined) dataTexts.searchPlaceholder = dataset.textSearchPlaceholder;
+                if (dataset.textSelectAll !== undefined) dataTexts.selectAll = dataset.textSelectAll;
+                if (dataset.textDeselectAll !== undefined) dataTexts.deselectAll = dataset.textDeselectAll;
+                if (dataset.textEmptySearch !== undefined) dataTexts.emptySearch = dataset.textEmptySearch;
+                if (dataset.textSelectedCount !== undefined) dataTexts.selectedCount = dataset.textSelectedCount;
+
+                // Varsayılan ayarlar, Data Attributes ve JS ayarlarını birleştir 
+                // Öncelik Sırası: JS Options > HTML Data Attributes > Varsayılanlar
+                this.options = Object.assign({
+                    searchable: true,
+                    showActions: this.originalSelect.hasAttribute('multiple'), // Multiple ise varsayılan true
+                    title: 'Seçim Yapınız',
+                    maxVisibleSelected: 2 // Butonda isimleri gösterilecek maksimum öğe sayısı
+                }, dataOptions, options);
+
+                // Texts objesini daha derin (deep) birleştir (Olası silinmeleri önlemek için)
+                this.options.texts = Object.assign({}, defaultTexts, dataTexts, options.texts || {});
+
+                this.isMultiple = this.originalSelect.hasAttribute('multiple');
+                this.optionsList = [];
+                
+                // MutationObserver durumu (kendi güncellemelerimizde sonsuz döngüyü önlemek için)
+                this.isReloading = false;
+                
+                this.injectCSS();
+                this.init();
+                this.setupObserver(); // Otomatik DOM değişiklik izleyicisi
+            }
+
+            // Gerekli CSS'i sayfaya sadece 1 kez ekler
+            injectCSS() {
+                if (document.getElementById('pia-select-styles')) return;
+
+                const style = document.createElement('style');
+                style.id = 'pia-select-styles';
+                style.innerHTML = `
+                    .pia-select-wrapper { position: relative; width: 100%; }
+                    .pia-select-btn { text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+                    .pia-select-btn::after { margin-left: auto; }
+                    .pia-dropdown { width: 100%; padding: 0.5rem; border-radius: 0.5rem; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); border: 1px solid rgba(0,0,0,.1); margin-top:0.25rem;}
+                    .pia-options-list { max-height: 250px; overflow-y: auto; margin-bottom: 0; padding-left: 0; list-style: none; }
+                    .pia-option-item { padding: 0.4rem 0.8rem; cursor: pointer; border-radius: 0.25rem; transition: background-color 0.15s; display: flex; align-items: center; font-size: 0.95rem; }
+                    .pia-option-item:hover { background-color: #f8f9fa; }
+                    .pia-option-item.selected { background-color: #e9ecef; color: #0d6efd; font-weight: 500; }
+                    .pia-option-item.selected::after { content: ''; display: block; width: 12px; height: 12px; margin-left: auto; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%230d6efd' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 8l4 4 8-8'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+                    .pia-search-box { margin-bottom: 0.5rem; position: sticky; top: 0; z-index: 2; background: white; }
+                    .pia-actions { display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #dee2e6; }
+                    .pia-actions button { padding: 0; font-size: 0.85rem; }
+                    .pia-empty-state { padding: 1rem; text-align: center; color: #6c757d; font-size: 0.9rem; display: none; }
+                    
+                    /* Scrollbar Styling for Webkit */
+                    .pia-options-list::-webkit-scrollbar { width: 6px; }
+                    .pia-options-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+                    .pia-options-list::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+                    .pia-options-list::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+                `;
+                document.head.appendChild(style);
+            }
+
+            init() {
+                // Orijinal select'i gizle
+                this.originalSelect.style.display = 'none';
+                this.originalSelect.dataset.piaInitialized = 'true';
+
+                // Tarayıcının otomatik ilk elemanı seçmesini iptal et (Özel "selected" niteliği yoksa)
+                if (!this.isMultiple) {
+                    const hasSelectedAttr = Array.from(this.originalSelect.options).some(opt => opt.hasAttribute('selected'));
+                    if (!hasSelectedAttr) {
+                        this.originalSelect.selectedIndex = -1; // Hiçbir şeyi seçili yapma
+                    }
+                }
+
+                // Ana sarmalayıcı (Wrapper)
+                this.wrapper = document.createElement('div');
+                this.wrapper.className = 'pia-select-wrapper dropdown';
+
+                // Buton (Tetikleyici)
+                this.button = document.createElement('button');
+                this.button.className = 'form-select pia-select-btn bg-white text-dark';
+                this.button.type = 'button';
+                this.button.setAttribute('data-bs-toggle', 'dropdown');
+                
+                if (this.isMultiple) {
+                    this.button.setAttribute('data-bs-auto-close', 'outside');
+                }
+
+                // Dropdown Menü
+                this.dropdownMenu = document.createElement('div');
+                this.dropdownMenu.className = 'dropdown-menu pia-dropdown';
+
+                // Arama Kutusu
+                if (this.options.searchable) {
+                    const searchBox = document.createElement('div');
+                    searchBox.className = 'pia-search-box';
+                    this.searchInput = document.createElement('input');
+                    this.searchInput.type = 'text';
+                    this.searchInput.className = 'form-control form-control-sm';
+                    this.searchInput.placeholder = this.options.texts.searchPlaceholder;
+                    searchBox.appendChild(this.searchInput);
+                    this.dropdownMenu.appendChild(searchBox);
+
+                    // Arama eventi
+                    this.searchInput.addEventListener('input', (e) => this.filterOptions(e.target.value));
+                }
+
+                // Aksiyon Butonları (Tümünü Seç / İptal)
+                if (this.isMultiple && this.options.showActions) {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'pia-actions';
+                    
+                    const selectAllBtn = document.createElement('button');
+                    selectAllBtn.className = 'btn btn-link text-decoration-none';
+                    selectAllBtn.type = 'button';
+                    selectAllBtn.innerText = this.options.texts.selectAll;
+                    selectAllBtn.addEventListener('click', () => this.selectAll(true));
+
+                    const deselectAllBtn = document.createElement('button');
+                    deselectAllBtn.className = 'btn btn-link text-decoration-none text-danger';
+                    deselectAllBtn.type = 'button';
+                    deselectAllBtn.innerText = this.options.texts.deselectAll;
+                    deselectAllBtn.addEventListener('click', () => this.selectAll(false));
+
+                    actionsDiv.appendChild(selectAllBtn);
+                    actionsDiv.appendChild(deselectAllBtn);
+                    this.dropdownMenu.appendChild(actionsDiv);
+                }
+
+                // Seçenekler Listesi (UL)
+                this.ul = document.createElement('ul');
+                this.ul.className = 'pia-options-list';
+                
+                // Boş Durum
+                this.emptyState = document.createElement('div');
+                this.emptyState.className = 'pia-empty-state';
+                this.emptyState.innerText = this.options.texts.emptySearch;
+
+                this.dropdownMenu.appendChild(this.ul);
+                this.dropdownMenu.appendChild(this.emptyState);
+
+                // Elemanları dom'a ekle
+                this.wrapper.appendChild(this.button);
+                this.wrapper.appendChild(this.dropdownMenu);
+                this.originalSelect.parentNode.insertBefore(this.wrapper, this.originalSelect.nextSibling);
+
+                // Seçenekleri Oku ve Oluştur
+                this.buildOptions();
+                this.updateButtonText();
+
+                // Dropdown açıldığında arama kutusuna odaklan
+                this.wrapper.addEventListener('shown.bs.dropdown', () => {
+                    if (this.searchInput) {
+                        this.searchInput.focus();
+                    }
+                });
+                
+                // Menü kapandığında aramayı sıfırla
+                this.wrapper.addEventListener('hidden.bs.dropdown', () => {
+                   if(this.searchInput) {
+                       this.searchInput.value = '';
+                       this.filterOptions('');
+                   }
+                });
+
+                // Orijinal select'in değişmesini dinle (dışarıdan js ile değiştirilirse diye)
+                this.originalSelect.addEventListener('change', () => {
+                    // Kendi tetiklediğimiz change eventlerinde döngüye girmemesi için
+                    if(this.isReloading) return;
+                    this.syncFromOriginal();
+                });
+            }
+
+            // Orijinal Select'teki DOM değişikliklerini otomatik izler
+            setupObserver() {
+                this.observer = new MutationObserver((mutations) => {
+                    if (this.isReloading) return; // Kendi yaptığımız değişiklikleri izleme
+                    this.reload(); // Option eklendiğinde/silindiğinde otomatik yenile
+                });
+
+                // Option'ların eklenmesi/silinmesi, textlerinin veya attribute'larının değişmesini izle
+                this.observer.observe(this.originalSelect, { 
+                    childList: true, 
+                    subtree: true,
+                    attributes: true, 
+                    attributeFilter: ['selected', 'disabled'] 
+                });
+            }
+
+            buildOptions() {
+                this.ul.innerHTML = '';
+                this.optionsList = [];
+                
+                Array.from(this.originalSelect.options).forEach((opt, index) => {
+                    // Boş option değerlerini (placeholder için olanları) atla
+                    if(opt.value === '' && !this.isMultiple) {
+                        if(opt.text && this.options.title === 'Seçim Yapınız') {
+                            this.options.title = opt.text; // Title'ı ilk boş option'dan al
+                        }
+                        return;
+                    }
+
+                    const li = document.createElement('li');
+                    li.className = `pia-option-item ${opt.selected ? 'selected' : ''}`;
+                    li.innerText = opt.text;
+                    li.dataset.value = opt.value;
+                    li.dataset.index = index;
+
+                    li.addEventListener('click', (e) => {
+                        this.handleOptionClick(opt, li);
+                    });
+
+                    this.ul.appendChild(li);
+                    this.optionsList.push({ element: li, text: opt.text.toLowerCase() });
+                });
+            }
+
+            handleOptionClick(originalOption, liElement) {
+                this.isReloading = true; // İzleyiciyi geçici sustur
+
+                if (this.isMultiple) {
+                    originalOption.selected = !originalOption.selected;
+                    liElement.classList.toggle('selected');
+                } else {
+                    // Tekli seçimde diğerlerini temizle
+                    Array.from(this.originalSelect.options).forEach(opt => opt.selected = false);
+                    this.optionsList.forEach(item => item.element.classList.remove('selected'));
+                    
+                    originalOption.selected = true;
+                    liElement.classList.add('selected');
+                    
+                    // Tekli seçimde menüyü kapat (Bootstrap metodu ile)
+                    const bsDropdown = bootstrap.Dropdown.getInstance(this.button);
+                    if (bsDropdown) bsDropdown.hide();
+                }
+
+                // Orijinal select için change eventi tetikle
+                this.triggerChange();
+                this.updateButtonText();
+
+                // Küçük bir gecikme ile izleyici engelini kaldır
+                setTimeout(() => { this.isReloading = false; }, 10);
+            }
+
+            selectAll(select) {
+                this.isReloading = true;
+
+                Array.from(this.originalSelect.options).forEach((opt) => {
+                    if (opt.value !== '') opt.selected = select;
+                });
+                
+                this.optionsList.forEach(item => {
+                    if (select) {
+                        item.element.classList.add('selected');
+                    } else {
+                        item.element.classList.remove('selected');
+                    }
+                });
+
+                this.triggerChange();
+                this.updateButtonText();
+
+                setTimeout(() => { this.isReloading = false; }, 10);
+            }
+
+            filterOptions(query) {
+                query = query.toLowerCase().trim();
+                let visibleCount = 0;
+
+                this.optionsList.forEach(item => {
+                    if (item.text.includes(query)) {
+                        item.element.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        item.element.style.display = 'none';
+                    }
+                });
+
+                this.emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+
+            updateButtonText() {
+                const selectedOptions = Array.from(this.originalSelect.selectedOptions).filter(opt => opt.value !== '');
+                
+                if (selectedOptions.length === 0) {
+                    this.button.innerHTML = `<span class="text-muted">${this.options.title}</span>`;
+                } else if (this.isMultiple) {
+                    if (selectedOptions.length <= this.options.maxVisibleSelected) {
+                        const texts = selectedOptions.map(opt => opt.text).join(', ');
+                        this.button.innerText = texts;
+                    } else {
+                        const text = this.options.texts.selectedCount.replace('{count}', selectedOptions.length);
+                        this.button.innerHTML = `<span class="fw-bold text-primary">${text}</span>`;
+                    }
+                } else {
+                    this.button.innerText = selectedOptions[0].text;
+                }
+            }
+
+            syncFromOriginal() {
+                Array.from(this.originalSelect.options).forEach((opt, index) => {
+                    const li = this.ul.querySelector(`[data-index="${index}"]`);
+                    if(li) {
+                        if(opt.selected) li.classList.add('selected');
+                        else li.classList.remove('selected');
+                    }
+                });
+                this.updateButtonText();
+            }
+
+            triggerChange() {
+                const event = new Event('change', { bubbles: true });
+                this.originalSelect.dispatchEvent(event);
+            }
+
+            // Orijinal select içindeki option'lar Javascript ile sonradan değiştirildiğinde,
+            // PiaSelect arayüzünü güncellemek için kullanılır. (Artık MutationObserver sayesinde manuel kullanıma gerek yok)
+            reload() {
+                this.isReloading = true; // Döngüleri engellemek için
+                
+                this.buildOptions();
+                this.updateButtonText();
+                
+                if (this.searchInput) {
+                    this.searchInput.value = '';
+                    this.filterOptions('');
+                }
+
+                setTimeout(() => { this.isReloading = false; }, 10);
+            }
+
+            // Eklentiyi tamamen yok edip, orijinal select'i geri getirmek için (İsteğe bağlı)
+            destroy() {
+                if (this.observer) this.observer.disconnect();
+                this.wrapper.remove();
+                this.originalSelect.style.display = '';
+                delete this.originalSelect.dataset.piaInitialized;
+                delete this.originalSelect._piaSelect;
+            }
+        }
+
+        // ==========================================
+        // OTOMATİK BAŞLATMA FONKSİYONU
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('select.PiaSelect, select.pia-select').forEach(el => {
+                new PiaSelect(el);
+            });
+        });
+
+    </script>
+
+    <script>
+        // --- İNDİRME FONKSİYONU ---
+        // Sadece yukarıdaki sınıfı okur ve temiz bir .js dosyası olarak indirir
+        function downloadPiaSelect() {
+            const sourceCode = document.getElementById('piaselect-source').textContent;
+            const blob = new Blob([sourceCode.trim()], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'PiaSelect.js';
+            document.body.appendChild(a);
+            a.click();
+            
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // ==========================================
+        // DEMO MANUEL TETİKLEYİCİLERİ VE TESTLER
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Demo 1
+            new PiaSelect('#demo1', {
+                searchable: false,
+                title: 'Şehir Seçiniz'
+            });
+
+            // Demo 2
+            new PiaSelect('#demo2', {
+                searchable: true,
+                title: 'Dil Seçiniz'
+            });
+
+            // Demo 3
+            new PiaSelect('#demo3', {
+                searchable: true,
+                showActions: true,
+                title: 'Meyveleri Seçiniz'
+            });
+
+            // Demo 4
+            new PiaSelect('#demo4', {
+                searchable: true,
+                showActions: true,
+                title: 'Select Colors',
+                texts: {
+                    searchPlaceholder: 'Type to search...',
+                    selectAll: 'Check All',
+                    deselectAll: 'Uncheck All',
+                    emptySearch: 'No results found',
+                    selectedCount: '{count} items selected'
+                }
+            });
+
+            // Demo 5 JS Tarafından BAŞLATILMIYOR (Yukarıdaki otomatik kod çalıştırıyor)
+            
+            // --- DEMO 6 İÇİN DİNAMİK EKLEME BUTONU (YENİ YAPI) ---
+            document.getElementById('addOptionBtn').addEventListener('click', function() {
+                const sel = document.getElementById('demo6');
+                
+                // Artık SADECE seçeneği ekliyoruz. 
+                // Eklenti kendi içindeki MutationObserver sayesinde değişikliği görecek ve arayüzü kendi güncelleyecek!
+                sel.insertAdjacentHTML('beforeend', '<option value="mercedes">Mercedes</option>');
+
+                // Butonu deaktif edelim ki sürekli basılmasın (test amaçlı)
+                this.innerText = "Mercedes Eklendi (Otomatik Güncellendi!)";
+                this.classList.replace('btn-dark', 'btn-success');
+                this.disabled = true;
+            });
+            
+            // Test için konsola yazdırma eventi:
+            document.querySelectorAll('select').forEach(sel => {
+                sel.addEventListener('change', function(e) {
+                    const id = e.target.id || 'Otomatik Sınıflı Element';
+                    console.log('Değişen Select ID:', id);
+                    if(e.target.multiple) {
+                        console.log('Seçilenler:', Array.from(e.target.selectedOptions).map(x => x.value));
+                    } else {
+                        console.log('Seçilen:', e.target.value);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
